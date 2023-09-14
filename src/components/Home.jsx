@@ -75,8 +75,8 @@ function Home() {
               <Link to={"/"}>
                 <img
                   className="mx-auto h-10 w-auto"
-                  src="src/assets/devkind.jpg"
-                  alt="Devkind"
+                  src={logoImage}
+                  alt="Devkind Logo"
                 />
               </Link>
               <button
@@ -103,7 +103,7 @@ function Home() {
                 </div>
                 <div className="py-6">
                   <Link
-                    to="/login"
+                    to="/signin"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Log in
@@ -139,9 +139,9 @@ function Home() {
               Barebone Authentication System
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-              lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-              fugiat aliqua.
+              This is a static website that simulates an authentication system.
+              It is made with Tailwind CSS, React JS and serves as a visual
+              representation of the authentication features.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
