@@ -8,7 +8,10 @@ const navigation = [
   { name: "Product", href: "#" },
   { name: "Features", href: "#" },
   { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
+  {
+    name: "Github Repo",
+    href: "https://github.com/muzamilmemon0/barebone-system",
+  },
 ];
 
 function Home() {
@@ -73,7 +76,7 @@ function Home() {
                 <img
                   className="mx-auto h-10 w-auto"
                   src="src/assets/devkind.jpg"
-                  alt="Your Company"
+                  alt="Devkind"
                 />
               </Link>
               <button
@@ -99,12 +102,12 @@ function Home() {
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
+                  <Link
+                    to="/login"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Log in
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -141,12 +144,12 @@ function Home() {
               fugiat aliqua.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
+              <Link
+                to="/signup"
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign Up
-              </a>
+              </Link>
               <a
                 href="#"
                 className="text-sm font-semibold leading-6 text-gray-900"
