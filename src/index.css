@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.placeholder-left-padding::placeholder {
+  padding-left: 10px;
+}
