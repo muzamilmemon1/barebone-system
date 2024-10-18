@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import logoImage from "../assets/devkind.jpg";
+import logoImage from "../assets/bank-alfalah.png";
 
 function SignIn() {
+  const navigate = useNavigate(); // Initialize the navigate hook
+
   const initialValues = {
     email: "",
     password: "",
@@ -20,8 +22,13 @@ function SignIn() {
 
   const handleSubmit = (values, { resetForm, setSubmitting }) => {
     console.log(values);
+    
+    // Assuming successful login, redirect to the success page
     resetForm();
     setSubmitting(false);
+
+    // Redirect to the success page with state to indicate sign-in
+    navigate("/success", { state: { from: "signin" } });
   };
 
   return (
@@ -29,7 +36,7 @@ function SignIn() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to={"/"}>
           <img
-            className="mx-auto h-10 w-auto"
+            className="mx-auto h-24 w-auto"
             src={logoImage}
             alt="Devkind Logo"
           />
