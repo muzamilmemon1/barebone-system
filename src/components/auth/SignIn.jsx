@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import logoImage from "../assets/bank-alfalah.png";
+import logoImage from "../../assets/bank-alfalah.png";
 
 function SignIn() {
   const navigate = useNavigate(); // Initialize the navigate hook
@@ -22,7 +22,7 @@ function SignIn() {
 
   const handleSubmit = (values, { resetForm, setSubmitting }) => {
     console.log(values);
-    
+
     // Assuming successful login, redirect to the success page
     resetForm();
     setSubmitting(false);

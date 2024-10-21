@@ -1,5 +1,5 @@
 // ***********************************************************
-// This example support/e2e.js is processed and
+// This example support/component.js is processed and
 // loaded automatically before your test files.
 //
 // This is a great place to put global configuration and
@@ -19,8 +19,9 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-// cypress/support/e2e.js or cypress/support/index.js
-const APP_URL = Cypress.config("baseUrl");
+import { mount } from 'cypress/react18'
 
-// Now you can use APP_URL in your tests
-export { APP_URL };
+Cypress.Commands.add('mount', mount)
+
+// Example use:
+// cy.mount(<MyComponent />)

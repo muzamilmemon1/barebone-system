@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import logoImage from "../assets/bank-alfalah.png";
+import logoImage from "../../assets/bank-alfalah.png";
 
 function SignUp() {
   const navigate = useNavigate(); // Hook to programmatically navigate
@@ -65,7 +65,7 @@ function SignUp() {
           {({ isSubmitting }) => (
             <Form className="space-y-6">
               <div>
-                <label  
+                <label
                   htmlFor="name"
                   className="block text-sm font-medium leading-6 text-gray-900 text-left"
                 >

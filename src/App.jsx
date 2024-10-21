@@ -1,12 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
-import Success from './components/Success';
-import LearnMore from './components/LearnMore';
-import Presentation from './components/Presentation';
-import ResetPassword from './components/ResetPassword';
-import NotFound from './components/NotFound';
+import Home from './components/layout/Home';
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
+import Success from './components/layout/Success';
+import Presentation from './components/presentation/Presentation';
+import ResetPassword from './components/auth/ResetPassword';
+import NotFound from './components/layout/NotFound';
 
 function App() {
   return (
@@ -18,10 +17,9 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/success" element={<Success />} />
           <Route path="/presentation" element={<Presentation />} />
-          <Route path="/learn-more" element={<LearnMore />} /> 
           <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path="*" element={<NotFound />} /> 
-          </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
     </Router>
   );
