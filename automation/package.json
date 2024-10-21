@@ -31,5 +31,8 @@
   },
   "engines": {
     "node": "18.x"
+  },
+  "dependencies": {
+    "@cypress/code-coverage": "^3.13.4"
   }
 }
