@@ -11,9 +11,10 @@ build-job:
   script:
     - yarn install --check-files  # Ensures integrity and installs dependencies
     - yarn build  # Builds the project
+    - ls -la dist/  # List contents of the dist directory
   artifacts:
     paths: 
-      - build/  # This will be used for deployment
+      - dist/  # Ensure this points to the correct build output directory
 
 # Cypress test job
 cypress-test-job:    
