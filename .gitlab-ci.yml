@@ -1,26 +1,26 @@
 image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
 
-stages:          
+stages:
   - build
   - test
   - deploy
 
-build-job:       
+build-job:
   stage: build
   script:
-    - npm ci
-    - npm run build
+    - yarn install --frozen-lockfile
+    - yarn build
   artifacts:
-    paths: 
+    paths:
       - build/  # This will be used for deployment
 
-cypress-test-job:    
+cypress-test-job:
   image: cypress/browsers:node18.20.4-chrome85-ff81
-  stage: test    
+  stage: test
   script:
-    - npm ci
-    - npm start &  # Start the app in the background
-    - npm run cy:run  # Run Cypress tests
+    - yarn install --frozen-lockfile
+    - yarn start &  # Start the app in the background
+    - yarn cy:run  # Run Cypress tests
   artifacts:
     when: always
     paths:
@@ -28,10 +28,10 @@ cypress-test-job:
       - cypress/screenshots/**/*.png
     expire_in: 1 week
 
-deploy-job:      
-  stage: deploy  
+deploy-job:
+  stage: deploy
   script:
-    - npm install -g vercel
+    - yarn global add vercel
     - vercel --prod --token $VERCEL_TOKEN
   only:
     - master  # This restricts deployment to the master branch
