@@ -5,36 +5,39 @@ stages:
   - test
   - deploy
 
+# Build job
 build-job:       
   stage: build
   script:
-    - npm ci
-    - npm run build
+    - yarn install --check-files  # Ensures integrity and installs dependencies
+    - yarn build  # Builds the project
   artifacts:
     paths: 
       - build/  # This will be used for deployment
 
+# Cypress test job
 cypress-test-job:    
-  image: cypress/browsers:node18.20.4-chrome85-ff81
+  image: cypress/browsers:node18.20.4-chrome85-ff81  # Cypress image with Node 18
   stage: test    
   script:
-    - npm ci
-    - npm start &  # Start the app in the background
-    - npm run cy:run  # Run Cypress tests
+    - yarn install --check-files  # Install dependencies for Cypress
+    - yarn start &  # Start the app in the background
+    - yarn run cy:run  # Run Cypress tests
   artifacts:
     when: always
     paths:
-      - cypress/videos/**/*.mp4
-      - cypress/screenshots/**/*.png
-    expire_in: 1 week
+      - cypress/videos/**/*.mp4  # Store videos of tests
+      - cypress/screenshots/**/*.png  # Store screenshots of failed tests
+    expire_in: 1 week  # Keep artifacts for 1 week
 
+# Deployment job
 deploy-job:      
   stage: deploy  
   script:
-    - npm install -g vercel
-    - vercel --prod --token $VERCEL_TOKEN
+    - yarn global add vercel  # Install Vercel globally using Yarn
+    - vercel --prod --token $VERCEL_TOKEN  # Deploy to Vercel with the token
   only:
-    - master  # This restricts deployment to the master branch
+    - master  # Only deploy from the master branch
   environment:
     name: production
-    url: https://barebone-system.vercel.app
+    url: https://barebone-system.vercel.app  # Production environment URL
