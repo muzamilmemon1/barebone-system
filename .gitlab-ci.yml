@@ -1,6 +1,6 @@
 image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
 
-stages:          
+stages:
   - build
   - test
   - deploy

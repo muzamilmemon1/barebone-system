@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logoImage from "../assets/bank-alfalah.png";
+import logoImage from "../../assets/bank-alfalah.png";
 
 function PageNotFound() {
   return (
