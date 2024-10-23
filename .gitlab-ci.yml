@@ -17,7 +17,7 @@ build-job:
 
 # Cypress test job
 cypress-test-job:    
-  image: cypress/browsers:node18.20.4-chrome85-ff81
+  image: cypress/browsers:node18.20.4-chrome113-ff116
   stage: test    
   script:
     - yarn install
