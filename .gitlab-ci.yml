@@ -18,9 +18,11 @@ build-job:
 
 # Cypress test job
 cypress-test-job:    
-  image: cypress/browsers:node18.20.4-chrome85-ff81  # Cypress image with Node 18
+  image: cypress/browsers:node18.20.4-chrome85-ff81 
   stage: test    
   script:
+    - node --version  # Print Node version for verification
+    - cypress --version  # Print Cypress version for verification
     - yarn install --check-files  # Install dependencies for Cypress
     - yarn start &  # Start the app in the background
     - yarn run cy:run  # Run Cypress tests
