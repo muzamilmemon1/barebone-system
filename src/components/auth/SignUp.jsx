@@ -65,7 +65,7 @@ function SignUp() {
           {({ isSubmitting }) => (
             <Form className="space-y-6">
               <div>
-                <label  
+                <label
                   htmlFor="name"
                   className="block text-sm font-medium leading-6 text-gray-900 text-left"
                 >
@@ -113,7 +113,7 @@ function SignUp() {
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900 text-left"
                 >
-                  Email
+                  Email address
                 </label>
                 <div className="mt-2">
                   <Field
