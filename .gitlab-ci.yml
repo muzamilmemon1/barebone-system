@@ -1,12 +1,12 @@
 image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
 
-stages:          
+stages:
   - build
   - test
   - deploy
 
-# Build job
-build-job:       
+# Build job (React app)
+build-job:
   stage: build
   script:
     - rm -rf node_modules  # Remove node_modules to ensure clean dependencies
@@ -17,9 +17,9 @@ build-job:
       - build/  # This will be used for deployment
 
 # Cypress test job
-cypress-test-job:    
+cypress-test-job:
   image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
-  stage: test    
+  stage: test
   script:
     - rm -rf node_modules  # Ensure a clean node_modules directory
     - yarn install --frozen-lockfile  # Reinstall dependencies with frozen lockfile to avoid issues with transitive deps
