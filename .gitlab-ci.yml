@@ -1,45 +1,49 @@
 image: node:18.20.4  # Base image for all jobs
 
-stages:          
+stages:
   - build
   - test
   - deploy
 
-# Build job
-build-job:       
+# Build job (React app)
+build-job:
   stage: build
   script:
-    - yarn install
-    - yarn build
+    - yarn install  # Install dependencies for the React app in the root directory
+    - yarn build    # Build the React app
   artifacts:
-    paths: 
+    paths:
       - build/  # Artifacts for deployment
 
 # Cypress test job
-cypress-test-job:    
+cypress-test-job:
   image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
-  stage: test    
+  stage: test
   script:
-    - yarn install
+    - yarn install  # Install dependencies for the React app in the root directory
+    - yarn build    # Build the React app
     - yarn start &  # Start the app in the background
+    - cd automation  # Navigate to the Cypress project directory
+    - yarn install  # Install Cypress dependencies inside the automation folder
+    - yarn wait-on http://localhost:5173  # Wait until the app is running
     - yarn cy:run  # Run Cypress tests
   artifacts:
     when: always
     paths:
-      - cypress/videos/**/*.mp4
-      - cypress/screenshots/**/*.png
+      - automation/cypress/videos/**/*.mp4
+      - automation/cypress/screenshots/**/*.png
     expire_in: 1 week
   allow_failure: false  # Ensure that this job fails the pipeline if tests fail
 
-# Deploy job
-deploy-job:      
-  stage: deploy  
+# Deploy job (React app deployment to Vercel)
+deploy-job:
+  stage: deploy
   script:
     - yarn global add vercel
     - vercel --prod --token $VERCEL_TOKEN
   only:
     - master  # Restrict deployment to master branch
-  dependencies:   # Only run this job if the previous jobs succeed
+  dependencies:
     - build-job
     - cypress-test-job
   environment:
