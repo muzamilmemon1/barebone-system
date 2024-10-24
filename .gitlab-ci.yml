@@ -1,4 +1,4 @@
-image: node:18.20.4  # Base image for all jobs
+image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
 
 stages:          
   - build
@@ -9,43 +9,42 @@ stages:
 build-job:       
   stage: build
   script:
-    - yarn install
-    - yarn build
+    - rm -rf node_modules  # Remove node_modules to ensure clean dependencies
+    - yarn install --frozen-lockfile  # Ensure integrity and install dependencies using frozen lockfile
+    - yarn build  # Build the project
   artifacts:
     paths: 
-      - build/  # Artifacts for deployment
+      - build/  # This will be used for deployment
 
 # Cypress test job
 cypress-test-job:    
   image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
   stage: test    
   script:
-    - yarn install        # Install React app dependencies (root)
-    - yarn build          # Build the React app (root)
-    - yarn start &        # Start the React app in the background (root)
-    - cd automation       # Move to Cypress folder
-    - yarn install        # Install Cypress dependencies (automation)
-    - yarn cy:run         # Run Cypress tests (automation)s
+    - rm -rf node_modules  # Ensure a clean node_modules directory
+    - yarn install --frozen-lockfile  # Reinstall dependencies with frozen lockfile to avoid issues with transitive deps
+    - yarn start &  # Start the app in the background
+    - yarn run cy:run  # Run Cypress tests
   artifacts:
     when: always
     paths:
-      - cypress/videos/**/*.mp4
-      - cypress/screenshots/**/*.png
-    expire_in: 1 week
+      - cypress/videos/**/*.mp4  # Store videos of tests
+      - cypress/screenshots/**/*.png  # Store screenshots of failed tests
+    expire_in: 1 week  # Keep artifacts for 1 week
   allow_failure: false  # Ensure that this job fails the pipeline if tests fail
 
-# Deploy job
+# Deployment job
 deploy-job:      
   stage: deploy  
   script:
-    - yarn global add vercel
-    - vercel --prod --token $VERCEL_TOKEN
+    - yarn global add vercel  # Install Vercel globally using Yarn
+    - vercel --prod --token $VERCEL_TOKEN  # Deploy to Vercel with the token
   only:
-    - master  # Restrict deployment to master branch
+    - master  # Only deploy from the master branch
   dependencies:   # Only run this job if the previous jobs succeed
     - build-job
     - cypress-test-job
   environment:
     name: production
-    url: https://barebone-system.vercel.app
+    url: https://barebone-system.vercel.app  # Production environment URL
   when: on_success  # Deploy only if the test job succeeds
