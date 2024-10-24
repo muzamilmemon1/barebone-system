@@ -20,9 +20,12 @@ cypress-test-job:
   image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
   stage: test    
   script:
-    - yarn install
-    - yarn start &  # Start the app in the background
-    - yarn cy:run  # Run Cypress tests
+    - yarn install        # Install React app dependencies (root)
+    - yarn build          # Build the React app (root)
+    - yarn start &        # Start the React app in the background (root)
+    - cd automation       # Move to Cypress folder
+    - yarn install        # Install Cypress dependencies (automation)
+    - yarn cy:run         # Run Cypress tests (automation)s
   artifacts:
     when: always
     paths:
