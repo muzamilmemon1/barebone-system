@@ -1,45 +1,47 @@
-image: node:18.20.4
+image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
 
-stages:          
+stages:
   - build
   - test
   - deploy
 
-build-job:       
+build-job:
   stage: build
   script:
-    - yarn install
+    - yarn install --frozen-lockfile
     - yarn build
   artifacts:
-    paths: 
-      - build/
+    paths:
+      - build/  # This will be used for deployment
 
-cypress-test-job:    
+cypress-test-job:
   image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
-  stage: test    
+  stage: test
   script:
-    - yarn install
-    - yarn dev 
-    - yarn cy:run  
+    - yarn install --frozen-lockfile
+    - yarn start &  # Start the app in the background
+    - yarn cy:run  # Run Cypress tests
   artifacts:
     when: always
     paths:
       - cypress/videos/**/*.mp4
       - cypress/screenshots/**/*.png
     expire_in: 1 week
-  allow_failure: false
+  allow_failure: false  # Fail the pipeline if tests fail
+  dependencies: 
+    - build-job  # This ensures that tests run after the build
 
-deploy-job:      
-  stage: deploy  
+deploy-job:
+  stage: deploy
   script:
     - yarn global add vercel
     - vercel --prod --token $VERCEL_TOKEN
   only:
-    - master  
+    - master  # This restricts deployment to the master branch
   dependencies:   
     - build-job
-    - cypress-test-job
+    - cypress-test-job  # Ensures deployment runs after build and tests succeed
   environment:
     name: production
     url: https://barebone-system.vercel.app
-  when: on_success
+  when: on_success  # Deploy only if previous jobs succeed
