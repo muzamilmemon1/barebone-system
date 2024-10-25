@@ -19,7 +19,7 @@ cypress-test-job:
   stage: test    
   script:
     - yarn install
-    - yarn start &  
+    - yarn dev &  
     - yarn cy:run  
   artifacts:
     when: always
