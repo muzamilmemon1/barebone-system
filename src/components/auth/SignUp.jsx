@@ -107,8 +107,8 @@ function SignUp() {
                     className="text-red-500 text-sm"
                   />
                 </div>
-              </div>  */}
-              {/* <div>
+              </div> 
+              <div>
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900 text-left"
