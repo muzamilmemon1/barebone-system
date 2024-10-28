@@ -8,7 +8,7 @@ function SignUp() {
 
   const initialValues = {
     name: "",
-    age: "",
+    // age: "",
     email: "",
     password: "",
     confirm_password: "",
@@ -16,9 +16,9 @@ function SignUp() {
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
-    age: Yup.number()
-      .required("Age is required")
-      .min(18, "You must be at least 18 years old"),
+    // age: Yup.number()
+    //   .required("Age is required")
+    //   .min(18, "You must be at least 18 years old"),
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
