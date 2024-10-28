@@ -19,7 +19,7 @@ cypress-test-job:
   stage: test
   script:
     - yarn install --frozen-lockfile
-    - yarn run concurrently "yarn dev" "yarn cy:run"
+    - yarn cy:test
   artifacts:
     when: always
     paths:
