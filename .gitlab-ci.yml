@@ -44,3 +44,6 @@ deploy-job:
   dependencies:
     - build-job
     - cypress-test-job
+  dependencies:
+    - build-job
+    - cypress-test-job
