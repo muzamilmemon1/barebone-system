@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { APP_URL } from '../../support/e2e';
+import { APP_URL } from "../../support/e2e";
 
 describe("Signup Flow", () => {
   beforeEach(() => {
