@@ -19,8 +19,7 @@ cypress-test-job:
   stage: test
   script:
     - yarn install --frozen-lockfile
-    - yarn start &  # Start the app in the background
-    - yarn cy:run  # Run Cypress tests
+    - yarn run concurrently "yarn dev" "yarn workspace automation run cy:run"
   artifacts:
     when: always
     paths:
@@ -38,10 +37,10 @@ deploy-job:
     - vercel --prod --token $VERCEL_TOKEN
   only:
     - master  # This restricts deployment to the master branch
-  dependencies:   
-    - build-job
-    - cypress-test-job  # Ensures deployment runs after build and tests succeed
   environment:
     name: production
     url: https://barebone-system.vercel.app
   when: on_success  # Deploy only if previous jobs succeed
+  dependencies:
+    - build-job
+    - cypress-test-job
