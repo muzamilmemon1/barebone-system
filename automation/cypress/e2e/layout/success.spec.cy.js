@@ -18,7 +18,7 @@ describe("Success Page", () => {
   it("displays correct message after sign up", () => {
     cy.visit(`${APP_URL}/signup`);
     cy.get('input[name="name"]').type("New User");
-    // cy.get('input[name="age"]').type("25");
+    cy.get('input[name="age"]').type("25");
     cy.get('input[name="email"]').type("newuser@example.com");
     cy.get('input[name="password"]').type("newpassword123");
     cy.get('input[name="confirm_password"]').type("newpassword123");
