@@ -1,0 +1,44 @@
+image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
+
+stages:          
+  - build
+  - test
+  - deploy
+
+# Build job
+build-job:       
+  stage: build
+  script:
+    - yarn install --check-files  # Ensures integrity and installs dependencies
+    - yarn build  # Builds the project
+    - ls -la dist/  # List contents of the dist directory
+  artifacts:
+    paths: 
+      - dist/  # Ensure this points to the correct build output directory
+
+# Cypress test job
+cypress-test-job:    
+  image: cypress/browsers:node18.20.4-chrome85-ff81  # Cypress image with Node 18
+  stage: test    
+  script:
+    - yarn install --check-files  # Install dependencies for Cypress
+    - yarn start &  # Start the app in the background
+    - yarn run cy:run  # Run Cypress tests
+  artifacts:
+    when: always
+    paths:
+      - cypress/videos/**/*.mp4  # Store videos of tests
+      - cypress/screenshots/**/*.png  # Store screenshots of failed tests
+    expire_in: 1 week  # Keep artifacts for 1 week
+
+# Deployment job
+deploy-job:      
+  stage: deploy  
+  script:
+    - yarn global add vercel  # Install Vercel globally using Yarn
+    - vercel --prod --token $VERCEL_TOKEN  # Deploy to Vercel with the token
+  only:
+    - master  # Only deploy from the master branch
+  environment:
+    name: production
+    url: https://barebone-system.vercel.app  # Production environment URL
