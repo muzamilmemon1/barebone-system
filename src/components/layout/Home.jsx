@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import logoImage from "../assets/bank-alfalah.png";
+import logoImage from "../../assets/bank-alfalah.png";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -33,7 +33,7 @@ function Home() {
                   <img
                     className="mx-auto h-24 w-auto"
                     src={logoImage}
-                    alt="Devkind Logo"
+                    alt="Bank Alfalah Logo"
                   />
                 </Link>
                 <button
@@ -75,11 +75,11 @@ function Home() {
       <div className="relative isolate px-6 pt-0 lg:px-8">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
-          <img
-            src={logoImage} 
-            alt="Bank Alfalah Logo"
-            className="mb-8 h-24 w-auto mx-auto"
-          />
+            <img
+              src={logoImage}
+              alt="Bank Alfalah Logo"
+              className="mb-8 h-24 w-auto mx-auto"
+            />
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               Barebone Authentication System
             </h1>
@@ -96,10 +96,10 @@ function Home() {
                 Sign Up
               </Link>
               <Link
-                to="/presentation" 
+                to="/presentation"
                 className="text-sm font-semibold leading-6 text-gray-900"
               >
-                Learn more <span aria-hidden="true">→</span>
+                Presentation <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>

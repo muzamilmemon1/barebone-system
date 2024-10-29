@@ -1,44 +1,46 @@
 image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
 
-stages:          
+stages:
   - build
   - test
   - deploy
 
-# Build job
-build-job:       
+build-job:
   stage: build
   script:
-    - yarn install --check-files  # Ensures integrity and installs dependencies
-    - yarn build  # Builds the project
-    - ls -la dist/  # List contents of the dist directory
+    - yarn install --frozen-lockfile
+    - yarn build
   artifacts:
-    paths: 
-      - dist/  # Ensure this points to the correct build output directory
+    paths:
+      - build/  # This will be used for deployment
 
-# Cypress test job
-cypress-test-job:    
-  image: cypress/browsers:node18.20.4-chrome85-ff81  # Cypress image with Node 18
-  stage: test    
+cypress-test-job:
+  image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
+  stage: test
   script:
-    - yarn install --check-files  # Install dependencies for Cypress
-    - yarn start &  # Start the app in the background
-    - yarn run cy:run  # Run Cypress tests
+    - yarn install --frozen-lockfile
+    - yarn cy:test
   artifacts:
     when: always
     paths:
-      - cypress/videos/**/*.mp4  # Store videos of tests
-      - cypress/screenshots/**/*.png  # Store screenshots of failed tests
-    expire_in: 1 week  # Keep artifacts for 1 week
+      - cypress/videos/**/*.mp4
+      - cypress/screenshots/**/*.png
+    expire_in: 1 week
+  dependencies: 
+    - build-job  # This ensures that tests run after the build
+  timeout: 10m
 
-# Deployment job
-deploy-job:      
-  stage: deploy  
+deploy-job:
+  stage: deploy
   script:
-    - yarn global add vercel  # Install Vercel globally using Yarn
-    - vercel --prod --token $VERCEL_TOKEN  # Deploy to Vercel with the token
+    - yarn global add vercel
+    - vercel --prod --token $VERCEL_TOKEN
   only:
-    - master  # Only deploy from the master branch
+    - master  # This restricts deployment to the master branch
   environment:
     name: production
-    url: https://barebone-system.vercel.app  # Production environment URL
+    url: https://barebone-system.vercel.app
+  when: on_success  # Deploy only if previous jobs succeed
+  dependencies:
+    - build-job
+    - cypress-test-job

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import logoImage from "../assets/bank-alfalah.png";
+import logoImage from "../../assets/bank-alfalah.png";
 
 function ResetPassword() {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -22,10 +22,10 @@ function ResetPassword() {
     // Simulating an API call with setTimeout
     setTimeout(() => {
       console.log(JSON.stringify(values, null, 2)); // Log the values for debugging
-      
+
       // Navigate to the success page after resetting the password
       navigate('/success', { state: { from: 'reset' } });
-      
+
       resetForm();
       setSubmitting(false);
     }, 400);
