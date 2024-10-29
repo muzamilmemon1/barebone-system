@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { APP_URL } from '../../support/e2e';
+import { APP_URL } from "../../support/e2e";
 
 describe("Signup Flow", () => {
   beforeEach(() => {
@@ -13,7 +13,7 @@ describe("Signup Flow", () => {
 
     // Fill out the signup form
     cy.get('input[name="name"]').type("Test User");
-    // cy.get('input[name="age"]').type("25");
+    cy.get('input[name="age"]').type("25");
     cy.get('input[name="email"]').type(uniqueEmail);
     cy.get('input[name="password"]').type("password123");
     cy.get('input[name="confirm_password"]').type("password123");
@@ -41,14 +41,14 @@ describe("Signup Flow", () => {
 
     // Assert that error messages are displayed
     cy.contains("Name is required").should("be.visible");
-    // cy.contains("Age is required").should("be.visible");
+    cy.contains("Age is required").should("be.visible");
     cy.contains("Email is required").should("be.visible");
     cy.contains("Password is required").should("be.visible");
     cy.contains("Confirm Password is required").should("be.visible");
 
     // Fill out the form with invalid data
     cy.get('input[name="name"]').type("Test User");
-    // cy.get('input[name="age"]').type("17"); // Under 18
+    cy.get('input[name="age"]').type("17"); // Under 18
     cy.get('input[name="email"]').type("invalidemail");
     cy.get('input[name="password"]').type("short");
     cy.get('input[name="confirm_password"]').type("mismatch");
@@ -57,7 +57,7 @@ describe("Signup Flow", () => {
     cy.get('button[type="submit"]').click();
 
     // Assert that specific error messages are displayed
-    // cy.contains("You must be at least 18 years old").should("be.visible");
+    cy.contains("You must be at least 18 years old").should("be.visible");
     cy.contains("Invalid email address").should("be.visible");
     cy.contains("Password must be at least 6 characters").should("be.visible");
     cy.contains("Passwords must match").should("be.visible");
