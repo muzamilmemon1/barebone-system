@@ -1,9 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import logoImage from "../assets/devkind.jpg";
+import logoImage from "../assets/bank-alfalah.png";
+
 function SignUp() {
+  const navigate = useNavigate(); // Hook to programmatically navigate
+
   const initialValues = {
     name: "",
     age: "",
@@ -30,8 +32,13 @@ function SignUp() {
 
   const handleSubmit = (values, { resetForm, setSubmitting }) => {
     console.log(values);
+
+    // Assuming successful signup, reset the form and redirect
     resetForm();
     setSubmitting(false);
+
+    // Redirect to the success page with state to indicate sign-up
+    navigate("/success", { state: { from: "signup" } });
   };
 
   return (
@@ -39,7 +46,7 @@ function SignUp() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to={"/"}>
           <img
-            className="mx-auto h-10 w-auto"
+            className="mx-auto h-24 w-auto"
             src={logoImage}
             alt="Devkind Logo"
           />
@@ -58,7 +65,7 @@ function SignUp() {
           {({ isSubmitting }) => (
             <Form className="space-y-6">
               <div>
-                <label
+                <label  
                   htmlFor="name"
                   className="block text-sm font-medium leading-6 text-gray-900 text-left"
                 >
