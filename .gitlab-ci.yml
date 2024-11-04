@@ -4,6 +4,7 @@ stages:
   - build
   - test
   - deploy
+  - stop  # Adding the stop stage for handling failures
 
 build-job:
   stage: build
@@ -45,3 +46,10 @@ deploy-job:
   dependencies:
     - build-job
     - cypress-test-job
+
+# Stop job to end pipeline on failure
+stop-job:
+  stage: stop
+  script:
+    - echo "Stopping the pipeline due to test failure"
+  when: on_failure  # Executes if any previous job fails
