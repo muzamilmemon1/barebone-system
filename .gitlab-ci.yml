@@ -3,8 +3,9 @@ image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
 stages:
   - build
   - test
+  - stop 
   - deploy
-  - stop  # Adding the stop stage for handling failures
+   # Adding the stop stage for handling failures
 
 build-job:
   stage: build
@@ -32,6 +33,13 @@ cypress-test-job:
   timeout: 10m
   allow_failure: false  # Ensures pipeline fails if tests fail
 
+# Stop job to end pipeline on failure
+stop-job:
+  stage: stop
+  script:
+    - echo "Stopping the pipeline due to test failure"
+  when: on_failure  # Executes if any previous job fails
+
 deploy-job:
   stage: deploy
   script:
@@ -47,9 +55,3 @@ deploy-job:
     - build-job
     - cypress-test-job
 
-# Stop job to end pipeline on failure
-stop-job:
-  stage: stop
-  script:
-    - echo "Stopping the pipeline due to test failure"
-  when: on_failure  # Executes if any previous job fails
