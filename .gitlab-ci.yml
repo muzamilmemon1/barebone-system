@@ -29,6 +29,7 @@ cypress-test-job:
   dependencies: 
     - build-job  # This ensures that tests run after the build
   timeout: 10m
+  allow_failure: false  # Ensures pipeline fails if tests fail
 
 deploy-job:
   stage: deploy

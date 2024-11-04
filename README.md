@@ -38,7 +38,7 @@ Make sure you have the following software installed on your machine:
 1. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/muzamilmemon0/barebone-system.git
+git clone https://github.com/muzamilmemon1/barebone-system.git
 ```
 
 2. Run
