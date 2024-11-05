@@ -1,0 +1,12 @@
+{
+    "git": {
+      "deploymentEnabled": {
+        "ci/add-test-failure-check": false,
+        "feature/fresh-regression-testing": false,
+        "feature/regression-testing": false,
+        "feature/add-cypress-tests": false,
+        "feature/cypress-testing": false
+      }
+    }
+  }
+  
