@@ -130,6 +130,7 @@ function SignUp() {
                   />
                 </div>
               </div>
+              {/* this is a comment */} 
               <div>
                 <label
                   htmlFor="password"
