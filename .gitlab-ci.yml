@@ -37,7 +37,7 @@ deploy-job:
   stage: deploy
   script:
     - yarn global add vercel
-    - vercel --prod --token $VERCEL_TOKEN
+    - vercel --prod --token $VERCEL_TOKEN --project barebone-system --debug
   only:
     - master  # This restricts deployment to the master branch
   environment:
