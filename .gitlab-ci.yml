@@ -3,9 +3,7 @@ image: node:18.20.4  # Using Node 18.20.4 as the base image for all jobs
 stages:
   - build
   - test
-  - stop 
   - deploy
-   # Adding the stop stage for handling failures
 
 build-job:
   stage: build
@@ -31,7 +29,7 @@ cypress-test-job:
   dependencies: 
     - build-job  # This ensures that tests run after the build
   timeout: 10m
-  allow_failure: true  # Ensures pipeline fails if tests fail
+  allow_failure: false  # Ensures pipeline fails if tests fail
 
 
 
