@@ -12,7 +12,7 @@ build-job:
     - yarn build
   artifacts:
     paths:
-      - build/  # This will be used for deployment
+      - dist/  # Use the dist folder as the artifact for deployment
 
 cypress-test-job:
   image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
@@ -31,13 +31,12 @@ cypress-test-job:
   timeout: 10m
   allow_failure: false  # Ensures pipeline fails if tests fail
 
-
-
 deploy-job:
   stage: deploy
   script:
     - yarn global add vercel
-    - vercel --prod --token $VERCEL_TOKEN --debug
+    - vercel pull --yes --token=$VERCEL_TOKEN --project=barebone-system  # Pull project settings
+    - vercel deploy --prod --token=$VERCEL_TOKEN --project=barebone-system --dist-dir=dist  # Specify the dist directory
   only:
     - master  # This restricts deployment to the master branch
   environment:
@@ -47,4 +46,3 @@ deploy-job:
   dependencies:
     - build-job
     - cypress-test-job
-
