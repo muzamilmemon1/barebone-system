@@ -31,18 +31,33 @@ cypress-test-job:
   timeout: 10m
   allow_failure: false  # Ensures pipeline fails if tests fail
 
-deploy-job:
+deploy_preview:
   stage: deploy
+  except:
+    - master  # Run this job on all branches except master
   script:
     - yarn global add vercel
-    - vercel pull --yes --token=$VERCEL_TOKEN --project=barebone-system  # Pull project settings
-    - vercel deploy --prod --token=$VERCEL_TOKEN --project=barebone-system --dist-dir=dist  # Specify the dist directory
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+    - vercel build --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --token=$VERCEL_TOKEN
+  environment:
+    name: preview
+  dependencies:
+    - build-job
+    - cypress-test-job
+
+deploy_production:
+  stage: deploy
   only:
-    - master  # This restricts deployment to the master branch
+    - master  # Only run this job on the master branch
+  script:
+    - yarn global add vercel
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
   environment:
     name: production
     url: https://barebone-system.vercel.app
-  when: on_success  # Deploy only if previous jobs succeed
   dependencies:
     - build-job
     - cypress-test-job
