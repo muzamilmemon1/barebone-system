@@ -86,6 +86,7 @@ function SignUp() {
                   />
                 </div>
               </div>
+               {/* hiding age field for now */}
             <div>
                 <label
                   htmlFor="age"
@@ -130,12 +131,13 @@ function SignUp() {
                   />
                 </div>
               </div>
+              {/* this is a comment */} 
               <div>
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  Passwordd
                 </label>
                 <div className="mt-2">
                   <Field

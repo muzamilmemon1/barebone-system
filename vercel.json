@@ -1,0 +1,6 @@
+{
+  "name": "barebone-system",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
