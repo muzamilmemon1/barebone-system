@@ -33,16 +33,17 @@ cypress-test-job:
 
 deploy-job:
   stage: deploy
+  only:
+    - master  # Restrict deployment to the master branch
   script:
     - yarn global add vercel
-    - vercel pull --yes --token=$VERCEL_TOKEN 
-    - vercel deploy --prod --token=$VERCEL_TOKEN  --dist-dir=dist  # Specify the dist directory
-  only:
-    - master  # This restricts deployment to the master branch
-  environment:
-    name: production
-    url: https://barebone-system.vercel.app
-  when: on_success  # Deploy only if previous jobs succeed
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
   dependencies:
     - build-job
     - cypress-test-job
+  environment:
+    name: production
+    url: https://barebone-system.vercel.app
+  when: on_success
