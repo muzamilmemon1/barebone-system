@@ -31,7 +31,7 @@ cypress-test-job:
   timeout: 10m
   allow_failure: false  # Ensures pipeline fails if tests fail
 
-ddeploy_preview:
+deploy_preview:
   stage: deploy
   except:
     - master  # Run this job on all branches except master
